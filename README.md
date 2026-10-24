@@ -1,10 +1,16 @@
 # 🤖 SRPCOM Telegram OpenWrt Control Center
 
-Panel Kontrol STB / Router OpenWrt berbasis **Telegram Bot Daemon** dengan tampilan **100% Tombol Interaktif (Inline Keyboard)**.
+Panel Kontrol STB / Router OpenWrt berbasis **Telegram Bot Daemon** dengan tampilan **100% Tombol Interaktif (Inline Keyboard)** dan dilengkapi **Web GUI LuCI** untuk konfigurasi praktis tanpa terminal!
 
 ---
 
 ## ⚡ Fitur Utama:
+- 🌐 **Web GUI LuCI Terintegrasi**:
+  - Menu pengaturan langsung di LuCI: **Services ➔ SRPCOM Telegram**.
+  - Form pengisian **Bot Token**, **Chat ID / Group ID**, dan **Message Thread ID**.
+  - Indikator status daemon real-time (**Aktif Berjalan / Berhenti**) beserta nomor PID.
+  - Tombol **Restart Bot** langsung dari web.
+  - Tombol **Kirim Pesan Uji Coba (Test Message)** untuk memastikan koneksi bot bekerja seketika.
 - 📊 **Status Sistem & Jaringan Lengkap**: Uptime, CPU Temperature bar & Overheat alert, RAM bar, IP Publik, Ping test, Jumlah klien aktif.
 - 📈 **Monitoring Pemakaian Kuota (vnStat & vnstati)**:
   - Teks akurat kuota Hari Ini, Kemarin, Bulan Ini, dan Total Akumulasi.
@@ -24,13 +30,12 @@ Panel Kontrol STB / Router OpenWrt berbasis **Telegram Bot Daemon** dengan tampi
 - 🧹 **Pembersihan Cache RAM**: Bebaskan swap/pagecache RAM router dengan 1 klik.
 - 💾 **Backup Konfigurasi**: Buat backup konfigurasi OpenWrt (`sysupgrade -b`) dan langsung kirimkan file `.tar.gz` ke chat Telegram.
 - 🔄 **Restart Router**: Restart STB/router secara remote dengan dialog konfirmasi aman.
-- 🔔 **Notifikasi Pasif Cerdas**: Alert saat STB baru menyala, peringatan suhu tinggi (>70°C), dan notifikasi saat IP publik berubah.
 
 ---
 
 ## 🚀 Cara Install 1 Kali Copas (One-Liner Install):
 
-Jalankan perintah ini di terminal **Terminal / SSH / TTYD** OpenWrt Anda:
+Jalankan perintah ini di **Terminal / SSH / TTYD** OpenWrt Anda:
 
 ```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/syamsul18782/srpcom-telegram-openwrt-control-center/main/install.sh 2>/dev/null || wget -qO- https://raw.githubusercontent.com/syamsul18782/srpcom-telegram-openwrt-control-center/main/install.sh)"
@@ -38,28 +43,20 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/syamsul18782/srpcom-telegr
 
 ---
 
-## ⚙️ Pengaturan Token Bot & Chat ID:
+## 🖥️ Pengaturan Melalui Web GUI LuCI:
 
-Setelah instalasi selesai, masukkan Token Bot dan ID Chat Telegram Anda:
-
-```sh
-uci set telegram.settings.bot_token='TOKEN_BOT_TELEGRAM_ANDA'
-uci set telegram.settings.group_id='CHAT_ID_ANDA'
-uci commit telegram
-/etc/init.d/srpcom_bot restart
-```
+Setelah proses instalasi selesai:
+1. Buka browser dan login ke LuCI OpenWrt Anda.
+2. Buka menu: **Services ➔ SRPCOM Telegram**.
+3. Masukkan **Telegram Bot Token** dan **Chat ID / Group ID** Anda.
+4. Klik tombol **Save & Apply** (Simpan & Terapkan).
+5. Anda juga dapat mengklik tombol **Kirim Pesan Uji Coba** untuk langsung menguji pengiriman pesan ke Telegram!
 
 ---
 
 ## 📦 Download Paket Manual (.ipk):
 Download rilis terbaru langsung dari [Releases](https://github.com/syamsul18782/srpcom-telegram-openwrt-control-center/releases/latest):
-- **`SRPCOM_telegram_OPENWRT_CONTROL_CENTER.ipk`**
-
-Install manual:
-```sh
-opkg update && opkg install python3 curl vnstat2 vnstati2
-opkg install SRPCOM_telegram_OPENWRT_CONTROL_CENTER.ipk
-```
+- **`SRPCOM_telegram_OPENWRT_CONTROL_CENTER.ipk`** (v1.1.0)
 
 ---
 👤 *Created & Maintained by [SRPCOM](https://srpcom.cloud)*
