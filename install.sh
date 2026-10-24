@@ -8,17 +8,22 @@ echo "=========================================================="
 IPK_URL="https://github.com/syamsul18782/srpcom-telegram-openwrt-control-center/releases/download/v1.0.0/SRPCOM_telegram_OPENWRT_CONTROL_CENTER.ipk"
 TMP_IPK="/tmp/SRPCOM_telegram_OPENWRT_CONTROL_CENTER.ipk"
 
-echo "[1/4] Memperbarui daftar paket (opkg update)..."
-opkg update
+echo "[1/3] Memeriksa dependensi sistem..."
+if ! which python3 >/dev/null 2>&1 || ! which curl >/dev/null 2>&1; then
+    echo " -> Memperbarui paket dan menginstall python3 & curl..."
+    opkg update 2>/dev/null || true
+    opkg install python3 curl 2>/dev/null || true
+fi
 
-echo "[2/4] Memeriksa dan menginstall dependensi..."
-opkg install python3 curl 2>/dev/null || true
-opkg install vnstat2 vnstati2 2>/dev/null || opkg install vnstat vnstati 2>/dev/null || true
+if ! which vnstat >/dev/null 2>&1; then
+    echo " -> Menginstall vnStat traffic monitor..."
+    opkg install vnstat2 vnstati2 2>/dev/null || opkg install vnstat vnstati 2>/dev/null || true
+fi
 
-echo "[3/4] Mengunduh paket SRPCOM Telegram Control Center..."
-curl -fsSL -o "$TMP_IPK" "$IPK_URL" || wget -q -O "$TMP_IPK" "$IPK_URL"
+echo "[2/3] Mengunduh paket SRPCOM Telegram Control Center..."
+curl -fsSL -o "$TMP_IPK" "$IPK_URL" 2>/dev/null || wget -q -O "$TMP_IPK" "$IPK_URL"
 
-echo "[4/4] Memasang paket .ipk..."
+echo "[3/3] Memasang paket .ipk..."
 opkg install --force-reinstall "$TMP_IPK"
 rm -f "$TMP_IPK"
 
