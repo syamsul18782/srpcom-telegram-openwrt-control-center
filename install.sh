@@ -12,7 +12,7 @@ echo "[1/3] Memeriksa dependensi sistem..."
 if ! which python3 >/dev/null 2>&1 || ! which curl >/dev/null 2>&1; then
     echo " -> Memperbarui paket dan menginstall python3 & curl..."
     opkg update 2>/dev/null || true
-    opkg install python3 curl 2>/dev/null || true
+    opkg install python3 curl libcurl4 2>/dev/null || true
 fi
 
 if ! which vnstat >/dev/null 2>&1; then
@@ -24,7 +24,7 @@ echo "[2/3] Mengunduh paket SRPCOM Telegram Control Center..."
 curl -fsSL -o "$TMP_IPK" "$IPK_URL" 2>/dev/null || wget -q -O "$TMP_IPK" "$IPK_URL"
 
 echo "[3/3] Memasang paket .ipk..."
-opkg install --force-reinstall "$TMP_IPK"
+opkg install --force-reinstall --force-overwrite "$TMP_IPK"
 rm -f "$TMP_IPK"
 
 echo ""
